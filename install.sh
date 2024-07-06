@@ -8,8 +8,8 @@ ARCH=$(uname -m)
 
 # Check for folder /opt/rustdesk-api-server/
 if [ -d "/opt/rustdesk-api-server/" ]; then
-    echo "Please remove /opt/rustdesk-api-server/"
-    echo "Use rm -rf /opt/rustdesk-api-server/ and run this script again"
+    echo "Verwijder /opt/rustdesk-api-server/"
+    echo "Gebruik rm -rf /opt/rustdesk-api-server/ en start het script nogmaals"
     exit
 fi
 
@@ -19,11 +19,11 @@ PYTHON_VERSION=$(python3 --version 2>&1 | awk '{print $2}')
 # Extract major and minor version (e.g., 3.8 from Python 3.8.5)
 PYTHON_MAJOR_MINOR=$(echo $PYTHON_VERSION | cut -d. -f1,2)
 
-echo -ne "Enter your preferred domain/DNS address: "
+echo -ne "Vul je domeinnaam/DNS hier in: "
 read wanip
 # Check wanip is valid domain
 if ! [[ $wanip =~ ^[a-zA-Z0-9]+([a-zA-Z0-9.-]*[a-zA-Z0-9]+)?$ ]]; then
-    echo -e "Invalid domain/DNS address"
+    echo -e "Geen juist Domein/DNS adres"
     exit 1
 fi
 
@@ -83,7 +83,7 @@ PREREQDEB="dnsutils ufw "
 PREREQRPM="bind-utils"
 PREREQARCH="bind"
 
-echo "Installing prerequisites"
+echo "Installeren van benodigdheden"
 if [ "${ID}" = "debian" ] || [ "$OS" = "Ubuntu" ] || [ "$OS" = "Debian" ] || [ "${UPSTREAM_ID}" = "debian" ] || [ "${UPSTREAM_ID}" = "ubuntu" ]; then
     sudo apt update -qq
     sudo apt-get install -y ${PREREQ} ${PREREQDEB} # git
@@ -112,7 +112,7 @@ sudo ufw enable
 
 # Make folder /var/lib/rustdesk-server/
 if [ ! -d "/var/lib/rustdesk-server" ]; then
-    echo "Creating /var/lib/rustdesk-server"
+    echo "Maken van /var/lib/rustdesk-server"
     sudo mkdir -p /var/lib/rustdesk-server/
 fi
 
@@ -123,7 +123,7 @@ cd /var/lib/rustdesk-server/ || exit 1
 # Download latest version of RustDesk
 RDLATEST=$(curl https://api.github.com/repos/rustdesk/rustdesk-server/releases/latest -s | grep "tag_name"| awk '{print substr($2, 2, length($2)-3) }')
 
-echo "Installing RustDesk Server"
+echo "Installeren van RustDesk Server"
 if [ "${ARCH}" = "x86_64" ] ; then
 wget https://github.com/rustdesk/rustdesk-server/releases/download/${RDLATEST}/rustdesk-server-linux-amd64.zip
 unzip rustdesk-server-linux-amd64.zip
@@ -150,7 +150,7 @@ sudo chmod +x /usr/bin/hbbr
 
 # Make folder /var/log/rustdesk-server/
 if [ ! -d "/var/log/rustdesk-server" ]; then
-    echo "Creating /var/log/rustdesk-server"
+    echo "Aanmaken van /var/log/rustdesk-server"
     sudo mkdir -p /var/log/rustdesk-server/
 fi
 sudo chown "${usern}" -R /var/log/rustdesk-server/
@@ -208,14 +208,14 @@ sudo systemctl start rustdesk-hbbr.service
 
 while ! [[ $CHECK_RUSTDESK_READY ]]; do
   CHECK_RUSTDESK_READY=$(sudo systemctl status rustdesk-hbbr.service | grep "Active: active (running)")
-  echo -ne "RustDesk Relay not ready yet...${NC}\n"
+  echo -ne "RustDesk Relay nog niet klaar...${NC}\n"
   sleep 3
 done
 
 pubname=$(find /var/lib/rustdesk-server/ -name "*.pub")
 key=$(cat "${pubname}")
 
-echo "Tidying up install"
+echo "Opruimen van installatie"
 if [ "${ARCH}" = "x86_64" ] ; then
 rm rustdesk-server-linux-amd64.zip
 rm -rf amd64
@@ -249,7 +249,7 @@ EOF
 echo "${secret_config}" >/opt/rustdesk-api-server/rustdesk_server_api/secret_config.py
 
 if [ ! -d "/var/log/rustdesk-server-api" ]; then
-    echo "Creating /var/log/rustdesk-server-api"
+    echo "Aanmaken van /var/log/rustdesk-server-api"
     sudo mkdir -p /var/log/rustdesk-server-api/
 fi
 
@@ -265,7 +265,7 @@ pip install --no-cache-dir -r /opt/rustdesk-api-server/requirements.txt
 cd /opt/rustdesk-api-server/
 python manage.py makemigrations
 python manage.py migrate
-echo "Please Set your password and username for the Web UI"
+echo "Geef een gebruikersnaam en wachtwoord voor de Web UI"
 python manage.py securecreatesuperuser
 deactivate
 
@@ -310,7 +310,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable rustdesk-api
 sudo systemctl start rustdesk-api
 
-echo "Installing nginx"
+echo "Installeren van nginx webserver"
 if [ "${ID}" = "debian" ] || [ "$OS" = "Ubuntu" ] || [ "$OS" = "Debian" ] || [ "${UPSTREAM_ID}" = "ubuntu" ] || [ "${UPSTREAM_ID}" = "debian" ]; then
     sudo apt -y install nginx
     sudo apt -y install python3-certbot-nginx
@@ -365,7 +365,7 @@ sudo ufw reload
 
 sudo certbot --nginx -d ${wanip}
 
-echo "Grabbing installers"
+echo "Ophalen van installers"
 string="{\"host\":\"${wanip}\",\"key\":\"${key}\",\"api\":\"https://${wanip}\"}"
 string64=$(echo -n "$string" | base64 -w 0 | tr -d '=')
 string64rev=$(echo -n "$string64" | rev)
