@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}MusicloverDesk WebUI{% endblock %}
+{% block legend_name %}Installeer Bestanden{% endblock %}
+{% block content %}
+<div style="padding: 20px; background-color: #F2F2F2;">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md15">
+      <div class="layui-card">
+        <div class="layui-card-header">Installeer Bestanden voor {{u.username}}</div>
+        <div class="layui-card-body">
+          <table class="layui-table">
+            <thead>
+              <tr>
+                <th>Windows EXE</th>
+                <th>Windows Installer</th>
+                <th>Linux Installer</th>
+                <th>Mac Installer</th>
+                <th>QR code voor SmartPhone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> <a href="/static/configs/MusicLoverRemote.exe">Download</a><br><br><button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu/static/configs/MusicLoverRemote.exe">Copy Link</button></td>
+                <td> <a href="/static/configs/install.bat">Download bat</a><br><br><button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu/static/configs/install.bat">Copy Link</button><br>
+                <br><a href="/static/configs/MusicLoverRemote.ps1">Download Powershell</a><br><br><button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu/static/configs/MusicLoverRemote.ps1">Copy Link</button></td>
+                <td> <a href="/static/configs/install-linux.sh">Download</a><br><br><button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu/static/configs/install-linux.sh">Copy Link</button></td> </td>
+                <td> <a href="/static/configs/install-linux.sh">Download</a><br><br><button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu/static/configs/install-mac.sh">Copy Link</button></td> </td>
+            <td> <img src="/static/configs/qrcode.png"> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+          <div class="layui-col-md15">
+      <div class="layui-card">
+        <div class="layui-card-header">Setups voor {{u.username}}</div>
+        <div class="layui-card-body">
+          <table class="layui-table">
+            <thead>
+              <tr>
+                <th>Beveiligde Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 0nI1VmL2gzch5mLrNXZk9yL6MHc0RHaiojIpBXYiwiI9EVcUpleBFnYFVlTGdjQKdlUQVFWLhDN080dsRWNxEGTa5kTBFlSml1R1plI6ISeltmIsISdl5iN4MXYu5yazVGZiojI0N3boJye <button onclick="copyToClipboard(this)" data-content="0nI1VmL2gzch5mLrNXZk9yL6MHc0RHaiojIpBXYiwiI9EVcUpleBFnYFVlTGdjQKdlUQVFWLhDN080dsRWNxEGTa5kTBFlSml1R1plI6ISeltmIsISdl5iN4MXYu5yazVGZiojI0N3boJye">Copy</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="layui-col-md15">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <table class="layui-table">
+            <thead>
+              <tr>
+                <th>API URL</th>
+                <th>Sleutel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> https://desk.nas86.eu <button onclick="copyToClipboard(this)" data-content="https://desk.nas86.eu">Kopieer</button></td>
+                <td> ZuGYfJQANNZLa15dlwO448KXUPRWJB7FNUEbqAzZTqQ= <button onclick="copyToClipboard(this)" data-content="ZuGYfJQANNZLa15dlwO448KXUPRWJB7FNUEbqAzZTqQ=">Kopieer</button></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

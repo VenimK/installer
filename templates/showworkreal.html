@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}RustDesk WebUI{% endblock %}
+{% block legend_name %}All Devices{% endblock %}
+{% block content %}
+<div style="padding: 20px; background-color: #F2F2F2;">
+  <div class="layui-row layui-col-space15">
+  <input type="text" id="globalSearchInput" onkeyup="globalSearch()" placeholder="Search all fields..." style="width: 200px; height: 20px; margin-bottom: 10px;">
+    <div class="layui-col-md15">
+      <div class="layui-card">
+        <div class="layui-card-header">Device Statistics - [Username: {{u.username}}]</div>
+        <div class="layui-card-body">
+          <table class="layui-table">
+            <thead>
+              <tr>
+                <th>Client ID</th>
+                <th>Version</th>
+                <th>Connection Password</th>
+                <th>System Username</th>
+                <th>Computer Name</th>
+                <th>Alias</th>
+                <th>Platform</th>
+                <th>System</th>
+                <th>CPU</th>
+                <th>Memory</th>
+                <th>Registration Time</th>
+                <th>Last Update Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for one in single_info %}
+              <tr>
+                <td><a href="rustdesk://{{one.rid}}">{{one.rid}}</a> </td>
+                <td>{{one.version}}</td>
+                <td>{{one.has_rhash}}</td>
+                <td>{{one.username}}</td>
+                <td>{{one.hostname}}</td>
+                <td>{{one.alias}}</td>
+                <td>{{one.platform}}</td>
+                <td>{{one.os}}</td>
+                <td>{{one.cpu}}</td>
+                <td>{{one.memory}}</td>
+                <td>{{one.create_time}}</td>
+                <td>{{one.update_time}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {% if u.is_admin %}
+    <div class="layui-col-md15">
+      <div class="layui-card">
+        <div class="layui-card-header">All Users</div>
+        <div class="layui-card-body">
+          <table class="layui-table">
+            <thead>
+              <tr>
+                <th>Client ID</th>
+                <th>Owner</th>
+                <th>Version</th>
+                <th>System Username</th>
+                <th>Computer Name</th>
+                <th>System</th>
+                <th>CPU</th>
+                <th>Memory</th>
+                <th>Registration Time</th>
+                <th>Last Update Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for one in all_info %}
+              <tr>
+                <td><a href="rustdesk://{{one.rid}}">{{one.rid}}</a> </td>
+                <td>{{one.rust_user}} </td>
+                <td>{{one.version}} </td>
+                <td>{{one.username}} </td>
+                <td>{{one.hostname}} </td>
+                <td>{{one.os}} </td>
+                <td>{{one.cpu}} </td>
+                <td>{{one.memory}} </td>
+                <td>{{one.create_time}} </td>
+                <td>{{one.update_time}} </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
