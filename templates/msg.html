@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block legend_name %}Information{% endblock %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  .container {
+    padding: 20px;
+    background: linear-gradient(145deg, #000000, #1a1a1a);
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .layui-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(77, 166, 255, 0.2);
+    transition: transform 0.3s;
+  }
+
+  .layui-card:hover {
+    transform: scale(1.05);
+  }
+
+  .layui-card-header {
+    background-color: #222222;
+    color: #4da6ff;
+    border-bottom: 1px solid #333333;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 0 10px #4da6ff;
+  }
+
+  .layui-card-body {
+    border-radius: 0 0 10px 10px;
+    padding: 20px;
+  }
+
+  .layui-table {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.5s;
+  }
+
+  .layui-table:hover {
+    box-shadow: 0 0 20px rgba(77, 166, 255, 0.5);
+  }
+
+  .layui-table th, .layui-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333333;
+  }
+
+  .layui-table th {
+    background-color: #222222;
+    color: #4da6ff;
+    font-weight: bold;
+  }
+
+  .layui-table a {
+    color: #4da6ff;
+    text-decoration: none;
+  }
+
+  .layui-table a:hover {
+    text-decoration: underline;
+  }
+
+  .layui-col-md15 {
+    margin-bottom: 20px;
+  }
+
+  /* Custom Scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4da6ff;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #007acc;
+  }
+
+  /* Background Animation */
+  @keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  body {
+    background: linear-gradient(270deg, #000000, #1a1a1a, #000000);
+    background-size: 600% 600%;
+    animation: gradientBackground 10s ease infinite;
+  }
+
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+</style>
+
+<div class="container">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-card layui-col-md12">
+      <div class="layui-card-header">{{ title }}</div>
+      <div class="layui-card-body">
+        {{ msg }}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

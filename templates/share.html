@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Share Machine{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'layui/css/style.css' %}">
+{% endblock %}
+{% block legend_name %}Share Machine with Other Users{% endblock %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  .container {
+    padding: 20px;
+    background: linear-gradient(145deg, #000000, #1a1a1a);
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .layui-card {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(77, 166, 255, 0.2);
+  }
+
+  .layui-card-header {
+    background-color: #222222;
+    color: #4da6ff;
+    border-bottom: 1px solid #333333;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 0 10px #4da6ff;
+  }
+
+  .layui-card-body {
+    border-radius: 0 0 10px 10px;
+    padding: 20px;
+  }
+
+  .layui-table {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .layui-table th, .layui-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333333;
+  }
+
+  .layui-table th {
+    background-color: #222222;
+    color: #4da6ff;
+    font-weight: bold;
+  }
+
+  .layui-table a {
+    color: #4da6ff;
+    text-decoration: none;
+  }
+
+  .layui-table a:hover {
+    text-decoration: underline;
+  }
+
+  .layui-col-md15 {
+    margin-bottom: 20px;
+  }
+
+  /* Custom Scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4da6ff;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #007acc;
+  }
+
+  /* Background Animation */
+  @keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  body {
+    background: linear-gradient(270deg, #000000, #1a1a1a, #000000);
+    background-size: 600% 600%;
+    animation: gradientBackground 10s ease infinite;
+  }
+
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* Custom Styles for Layer Popup */
+  .layui-layer {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .layui-layer-title {
+    background-color: #222222 !important;
+    color: #4da6ff !important;
+  }
+
+  .layui-layer-btn a {
+    background-color: #4da6ff !important;
+    color: #ffffff !important;
+  }
+
+  .layui-layer-btn a:hover {
+    background-color: #007acc !important;
+  }
+
+  .layui-layer-content {
+    color: #ffffff !important;
+  }
+
+  /* Custom Styles for Transfer Box and Arrows */
+  .layui-transfer-box {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333333 !important;
+    color: #ffffff !important;
+  }
+
+  .layui-transfer-box .layui-transfer-header,
+  .layui-transfer-box .layui-transfer-data {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .layui-transfer-active {
+    color: #4da6ff !important;
+  }
+
+  .layui-transfer-box .layui-transfer-search {
+    background-color: #222222 !important;
+    border: 1px solid #333333 !important;
+    color: #ffffff !important;
+  }
+
+  .layui-transfer-box .layui-transfer-search input {
+    background-color: #222222 !important;
+    color: #ffffff !important;
+    border: none !important;
+  }
+
+  .layui-transfer-box .layui-transfer-search .layui-icon {
+    color: #4da6ff !important;
+  }
+
+  .layui-transfer-box .layui-transfer-data {
+    background-color: #1a1a1a !important;
+  }
+
+  .layui-transfer-box .layui-transfer-data span {
+    color: #ffffff !important;
+  }
+
+</style>
+
+<div class="container">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-card layui-col-md3-offset2">
+      <div class="layui-card-header">Adjust the Machine to be Shared on the Right Side</div>
+      <div id="showdevice"></div>
+      <button id="create" type="button" class="layui-btn padding-5" lay-on="getData">Generate Sharing Link</button>
+    </div>
+    <div class="layui-card">1. The link is valid for 15 minutes, do not share it with others casually.</div>
+    <div class="layui-card">2. The shared machine grants the same permissions to the recipient. If the machine has a saved password, the recipient can also connect directly.</div>
+    <div class="layui-card">3. For security reasons, the link is valid for 15 minutes and only effective once. Once the link is accessed by a user other than the sharer's login user, the sharing takes effect, and subsequent access links become invalid.</div>
+    <div class="layui-card layui-col-md6-offset1">
+      <table class="layui-table">
+        <colgroup>
+          <col width="30">
+          <col width="150">
+          <col width="200">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Link Address</th>
+            <th>Creation Time</th>
+            <th>ID List</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for one in sharelinks %}
+          <tr>
+            <td><script>document.write(window.location);</script>/{{one.shash}}</td>
+            <td>{{one.create_time}}</td>
+            <td>{{one.peers}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+layui.use(['transfer', 'jquery', 'layer'], function(){
+  var transfer = layui.transfer;
+  var $ = layui.jquery;
+  var layer = layui.layer;
+
+  transfer.render({
+    elem: '#showdevice',
+    title: ['My Machines', 'Shared Machines'],
+    data: [
+      {% for peer in peers %}
+      {"value": "{{peer.id}}", "title": "{{peer.name}}"},
+      {% endfor %}
+    ],
+    id: 'device'
+  });
+
+  $("#create").click(function(){
+    var getData = transfer.getData('device');
+    $.ajax({
+      url:'/api/share',
+      type:'post',
+      dataType:'json',
+      data:{
+        data:JSON.stringify(getData),
+      },
+      success:function(data){
+        if (data.code == 1) {
+          layer.alert('Success! To share, please copy the following link to others:<br>'+ window.location + '/' +data.shash, function (index) {
+            location.reload();
+          });
+        } else {
+          layer.msg(data.msg);
+        }
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="https://static.neohotels.com/v3/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="{% static 'custom.css' %}"> <!-- Link to your custom CSS -->
+    {% block link %}{% endblock %}
+    <style>
+        :root {
+            --primary-color: #1db954;
+            --secondary-color: #121212;
+            --background-color: #181818;
+            --text-color: #e0e0e0;
+            --border-color: #333;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .layui-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--secondary-color);
+        }
+
+        .layui-nav-item {
+            position: relative;
+        }
+
+        .layui-nav-item a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--text-color);
+            transition: color 0.3s ease-in-out;
+        }
+
+        .layui-nav-item a .icon {
+            margin-right: 8px;
+        }
+
+        .layui-nav-item:hover .layui-nav-child {
+            display: block;
+        }
+
+        .layui-nav-item a:hover {
+            color: var(--primary-color);
+        }
+
+        .layui-nav-child {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .layui-nav-child dd a {
+            padding: 10px 20px;
+        }
+
+        .layui-elem-field {
+            border: none; /* Remove default border */
+            position: relative; /* For pseudo-element positioning */
+            margin-top: 20px;
+        }
+
+        .layui-elem-field::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--primary-color);
+            z-index: 1;
+            box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        }
+
+        .layui-field-title {
+            display: inline-block;
+            padding: 0 10px;
+            background: var(--background-color);
+            position: relative;
+            z-index: 2;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        }
+
+        .layui-form-checkbox[lay-skin=primary] i {
+            border-color: var(--primary-color);
+        }
+
+        .layui-form-checkbox[lay-skin=primary]:hover i,
+        .layui-form-checked[lay-skin=primary] i {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .neon-text {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+        }
+
+        .neon-box {
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .neon-box:hover {
+            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color), 0 0 40px var(--primary-color);
+        }
+
+        .layui-form-item {
+            margin-bottom: 20px;
+        }
+
+        .layui-form-label {
+            color: var(--text-color);
+        }
+
+        .layui-input {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .layui-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .layui-btn {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .layui-btn:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .mt-10 { margin-top: 10px; }
+        .mt-20 { margin-top: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .pt-10 { padding-top: 10px; }
+        .pt-20 { padding-top: 20px; }
+        .pb-10 { padding-bottom: 10px; }
+        .pb-20 { padding-bottom: 20px; }
+    </style>
+</head>
+
+<body>
+
+<script src="{% static 'layui/layui.js' %}"></script>
+<script>
+layui.use('element', function() {
+    var element = layui.element;
+    element.on('nav(demo)', function(elem) {
+        layer.msg(elem.text());
+    });
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    window.globalSearch = function() {
+        var input, filter, tables, tr, td, txtValue;
+        input = document.getElementById("globalSearchInput");
+        filter = input.value.toUpperCase();
+        tables = document.getElementsByTagName("table");
+
+        for (let table of tables) {
+            tr = table.getElementsByTagName("tr");
+            for (let i = 1; i < tr.length; i++) {
+                let row = tr[i];
+                let cells = row.getElementsByTagName("td");
+                let textContent = Array.from(cells).map(cell => cell.textContent.toUpperCase());
+                row.style.display = textContent.some(text => text.includes(filter)) ? "" : "none";
+            }
+        }
+    }
+});
+</script>
+
+<script>
+function copyToClipboard(element) {
+  const text = element.getAttribute('data-content');
+  navigator.clipboard.writeText(text).then(() => {
+    console.log("Copied: " + text);
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
+}
+</script>
+
+    <ul class="layui-nav">
+        <li class="layui-nav-item"><a href="/"><i class="fas fa-home icon"></i>Home</a></li>
+        <li class="layui-nav-item"><a href="/api/share"><i class="fas fa-share icon"></i>Share</a></li>
+        <li class="layui-nav-item"><a href="/api/installers"><i class="fas fa-download icon"></i>Installers</a></li>
+        {% if u.is_admin %}
+        <li class="layui-nav-item"><a href="/admin" target="_blank"><i class="fas fa-user-shield icon"></i>Admin Panel</a></li>
+        <li class="layui-nav-item"><a href="/api/conn_log"><i class="fas fa-history icon"></i>Connection Log</a></li>
+        <li class="layui-nav-item"><a href="/api/file_log"><i class="fas fa-file-alt icon"></i>File Transfer Log</a></li>
+        {% endif %}
+        <li class="layui-nav-item"><a href="/api/user_action?action=logout" target="_blank"><i class="fas fa-sign-out-alt icon"></i>Logout</a></li>
+    </ul>
+
+    <fieldset class="layui-elem-field" style="margin-top: 20px;">
+        <legend class="layui-field-title">{% block legend_name %}{% endblock %}</legend>
+    </fieldset>
+    {% block content %}{% endblock %}
+</body>
+
+</html>
